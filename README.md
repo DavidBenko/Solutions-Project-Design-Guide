@@ -5,6 +5,13 @@ This guide describes a set of AnyPresence Solutions deliverable design practice.
 
 Our goals here are consistency and focusing on business logic while avoiding design bikeshedding. We’re looking for a good, consistent, well-documented way to design projects, not necessarily the only/ideal way.
 
+Code Style and Best Practices
+---------
+**AnyPresence** develops on a number of platforms and arcitechures and utilizes many different programming languages to best complete the task at hand. Below is a list of style guides for each language, to which each **AnyPresence**-designed application should strive to uphold.
+
+- [Java](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/java-style.md)
+- [Objective-C](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/objective-c-style.md)
+
 Project Collaboration
 ---------
 
