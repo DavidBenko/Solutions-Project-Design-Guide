@@ -5,24 +5,24 @@ This style guide outlines the coding conventions of the JavaScript code at [AnyP
 
 Table of Contents
 ---------
-- [Background](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#background)
-- [Language](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#language)
-- [Code Organization](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#code-organization)
-- [Spacing](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#spacing)
-- [Semicolons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#semicolons)
-- [Linting](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#linting)
-- [Comments](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#comments)
-- [Quotes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#quotes)
-- [Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#variables)
-  - [Global Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#global-variables)
-- [Operators](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#operators)
-  - [Equality](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#equality)
-- [Conditionals](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#conditionals)
-- [Ternary Operator](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#ternary-operator)
-- [Prototypes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#prototypes)
-- [Closures](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#closures)
-- [Singletons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#singletons)
-- [Backbone.js](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#)
+- [Background](#background)
+- [Language](#language)
+- [Code Organization](#code-organization)
+- [Spacing](#spacing)
+- [Semicolons](#semicolons)
+- [Linting](#linting)
+- [Comments](#comments)
+- [Quotes](#quotes)
+- [Variables](#variables)
+  - [Global Variables](#global-variables)
+- [Operators](#operators)
+  - [Equality](#equality)
+- [Conditionals](#conditionals)
+- [Ternary Operator](#ternary-operator)
+- [Prototypes](#prototypes)
+- [Closures](#closures)
+- [Singletons](#singletons)
+- Backbone.js
 
 Background
 ---------
@@ -65,11 +65,13 @@ This minimizes coupling and maximizes cohesion because dependencies tend to go t
 
 Spacing
 ---------
-- Indent using tabs. Never indent with spaces.
+- Indent using 2 spaces. Never indent with tabs.
 - No whitespace at the end of line or on blank lines.
 - Use UNIX-style newlines (`\n`), and a newline character as the last character of a file. Windows-style newlines (`\r\n`) are forbidden inside any repository.
 - New line at the end of each file.
 - Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
+- No spaces *inside* parentheses.  i.e. `if (foo) {` but not `if ( foo ) {`.
+- One space *outside* parentheses.  i.e. `function (bar) {` but not `function(bar){`.
 
 **Preferred:**
 ```javascript
