@@ -9,7 +9,9 @@ Code Style and Best Practices
 ---------
 **AnyPresence** develops on a number of platforms and arcitechures and utilizes many different programming languages to best complete the task at hand. Below is a list of style guides for each language, to which each **AnyPresence**-designed application should strive to uphold.
 
+- [CoffeeScript](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md)
 - [Java](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/java-style.md)
+- [JavaScript](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md)
 - [Objective-C](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/objective-c-style.md)
 
 Project Collaboration
