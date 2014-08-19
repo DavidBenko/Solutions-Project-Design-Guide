@@ -49,7 +49,7 @@ The different types of branches we may use are:
 May branch off from: `develop`, must merge back into: `develop`. Branch naming convention: anything except `master`, `develop`, `release-*`, or `hotfix-*`.
 
 - Creating a feature branch
-```shell
+```bash
 $ git checkout -b myfeature develop
 Switched to a new branch "myfeature"
 ```
@@ -58,7 +58,7 @@ Switched to a new branch "myfeature"
 May branch off from: `develop`, must merge back into: `develop` and `master`. Branch naming convention: `release-*`.
 
 - Creating a feature branch
-```shell
+```bash
 $ git checkout -b release-1.2 develop
 Switched to a new branch "release-1.2"
 ..
@@ -73,7 +73,7 @@ $ git commit -a -m "Bumped version number to 1.2"
 May branch off from: `master`, must merge back into: `develop` and `master`. Branch naming convention: `hotfix-*`.
 
 - Creating a feature branch
-```shell
+```bash
 $ git checkout -b hotfix-1.2.1 master
 Switched to a new branch "hotfix-1.2.1"
 ..
@@ -98,11 +98,11 @@ A good commit message will explain to a reader the changes that were made, but d
 **AnyPresence** repositories are integrated with [Pivotal Tracker](https://pivotaltracker.com) using GitHub's post-recieve hooks. GitHub integration supports all of the same keywords syntax and functionality described above for [SCM Post-Commit Message Syntax](https://www.pivotaltracker.com/help/api?version=v3#scm_post_commit_message_syntax). The comments created by GitHub integration will also include the URL of the associated commit. 
 
 For example, if Scotty uses the following message when committing:
-```shell
+```
 [#12345677 #12345678] Tracking IP using Visual Basic GUI
 ```
 ...it will result in the following comment being added to Pivotal Tracker stories `12345677` and `12345678`, and the stories will be started if they were not yet started:
-```shell
+```
 Commit: Scotty
 54321
 
@@ -111,7 +111,7 @@ Commit: Scotty
 
 To automatically finish a story by using a commit message, include **fixed**, **completed** or **finished** in the square brackets in addition to the story ID. You may also use different cases or forms of these verbs, such as **Fix** or **FIXES**, and they may appear before or after the story ID. Note: For features, this will put the story in the `finished` state. For chores, it will put the story in the `accepted` state. For example:
 
-```shell
+```
 [Fixes #12345678] Encryptions now sufficiently rerouted
 ```
 
