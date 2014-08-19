@@ -72,13 +72,14 @@ Spacing
 - Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 - No spaces *inside* parentheses.  i.e. `if (foo) {` but not `if ( foo ) {`.
 - One space *outside* parentheses.  i.e. `function (bar) {` but not `function(bar){`.
+- Function calls should have *no space* before the opening paren.  i.e. `myFunc('value');`
 
 **Preferred:**
 ```javascript
 if (user.isHappy) {
-  //Do something
+  // Do something
 } else {
-  //Do something else
+  // Do something else
 }
 ```
 
@@ -86,11 +87,11 @@ if (user.isHappy) {
 ```javascript
 if (user.isHappy)
 {
-    //Do something
+  // Do something
 }
 else 
 {
-    //Do something else
+  // Do something else
 }
 ```
 
@@ -121,8 +122,8 @@ Block comments should generally be avoided, as code should be as self-documentin
  * @param {number} r The desired radius of the circle.
  */
 function Circle(r) {
-    /** @private */ this.radius = r;
-    /** @private */ this.circumference = 2 * Math.PI * r;
+  /** @private */ this.radius = r;
+  /** @private */ this.circumference = 2 * Math.PI * r;
 }
  
 /**
@@ -132,7 +133,7 @@ function Circle(r) {
  * @return {Circle} The new Circle object.
  */
 Circle.fromDiameter = function (d) {
-    return new Circle(d / 2);
+  return new Circle(d / 2);
 };
  
 /**
@@ -143,7 +144,7 @@ Circle.fromDiameter = function (d) {
  * @return {number} The circumference of the circle.
  */
 Circle.prototype.calculateCircumference = function () {
-    return 2 * Math.PI * this.radius;
+  return 2 * Math.PI * this.radius;
 };
  
 /**
@@ -153,7 +154,7 @@ Circle.prototype.calculateCircumference = function () {
  * @return {number} The circumference of the circle.
  */
 Circle.prototype.getCircumference = function () {
-    return this.circumference;
+  return this.circumference;
 };
  
 /**
@@ -164,7 +165,7 @@ Circle.prototype.getCircumference = function () {
  * @return {string} Human-readable representation of this Circle.
  */
 Circle.prototype.toString = function () {
-    return "A Circle object with radius of " + this.radius + ".";
+  return "A Circle object with radius of " + this.radius + ".";
 };
 ```
 
@@ -191,8 +192,7 @@ Prefix private properties with `_`. This is a convention to compensate for JavaS
 **Preferred:**
 ```javascript
 var veryImportantView = Backbone.View.extend({
-  _toViewModel: function () {
-  }
+  _toViewModel: function () {}
 });
 ```
 
@@ -238,25 +238,23 @@ Conditionals should use the positive case if possible when using an `else` body.
 **Preferred:**
 ```javascript
 // If with else body
-if(someVariable){
+if (someVariable) {
 	// Do Something
-}
-else {
+} else {
 	// Do Something
 }
 
 // If with no else body
-if(!someOtherVariable){
+if (!someOtherVariable) {
 	// Do Something
 }
 ```
 
 **Not Preferred:**
 ```javascript
-if(!someVariable){
+if (!someVariable) {
 	// Do Something
-}
-else {
+} else {
 	// Do Something
 }
 ```
@@ -291,7 +289,7 @@ if (!a.length) {
 
 **Not Preferred:**
 ```javascript
-Array.prototype.empty = function() {
+Array.prototype.empty = function () {
   return !this.length;
 }
 
@@ -307,51 +305,25 @@ Closures should be named to produce better stack traces, heap and cpu profiles. 
 
 **Preferred:**
 ```javascript
-setTimeout(function connect() {
-  client.connect(afterConnect);
-}, 1000);
-
-function afterConnect() {
+var afterConnect = function () {
   console.log('connected');
-}
+},
+connect = function () {
+  client.connect(afterConnect);
+};
+
+setTimeout(connect, 1000);
 
 ```
 **Not Preferred:**
 ```javascript
-setTimeout(function() {
-  client.connect(function() {
+setTimeout(function () {
+  client.connect(function () {
     console.log('losing');
   });
 }, 1000);
 ```
 
-Singletons
----------
-Singletons should use this pattern ([adapted from Google](http://code.google.com/p/jslibs/wiki/JavascriptTips#Singleton_pattern) to work in "strict" mode)
-
-```javascript
-(function(global) {
-  "use strict";
-  var MySingletonClass = function() {
-
-    if ( MySingletonClass.prototype._singletonInstance ) {
-      return MySingletonClass.prototype._singletonInstance;
-    }
-    MySingletonClass.prototype._singletonInstance = this;
-
-    this.Foo = function() {
-      // ...
-    };
-  };
-
-var a = new MySingletonClass();
-var b = MySingletonClass();
-global.result = a === b;
-
-}(window));
-
-console.log(result);
-```
 
 Backbone.js
 ---------
