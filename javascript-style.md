@@ -21,7 +21,7 @@ Table of Contents
 - [Ternary Operator](#ternary-operator)
 - [Prototypes](#prototypes)
 - [Closures](#closures)
-- [Singletons](#singletons)
+- [Classes](#classes)
 - Backbone.js
 
 Background
@@ -115,55 +115,55 @@ Block comments should generally be avoided, as code should be as self-documentin
 
 ```javascript
 /**
- * Creates an instance of Circle.
- *
- * @constructor
- * @this {Circle}
- * @param {number} r The desired radius of the circle.
- */
+ Creates an instance of Circle.
+ 
+ @constructor
+ @this {Circle}
+ @param {number} r The desired radius of the circle.
+*/
 function Circle(r) {
   /** @private */ this.radius = r;
   /** @private */ this.circumference = 2 * Math.PI * r;
 }
  
 /**
- * Creates a new Circle from a diameter.
- *
- * @param {number} d The desired diameter of the circle.
- * @return {Circle} The new Circle object.
- */
+ Creates a new Circle from a diameter.
+ 
+ @param {number} d The desired diameter of the circle.
+ @return {Circle} The new Circle object.
+*/
 Circle.fromDiameter = function (d) {
   return new Circle(d / 2);
 };
  
 /**
- * Calculates the circumference of the Circle.
- *
- * @deprecated
- * @this {Circle}
- * @return {number} The circumference of the circle.
- */
+ Calculates the circumference of the Circle.
+ 
+ @deprecated
+ @this {Circle}
+ @return {number} The circumference of the circle.
+*/
 Circle.prototype.calculateCircumference = function () {
   return 2 * Math.PI * this.radius;
 };
  
 /**
- * Returns the pre-computed circumference of the Circle.
- *
- * @this {Circle}
- * @return {number} The circumference of the circle.
- */
+ Returns the pre-computed circumference of the Circle.
+ 
+ @this {Circle}
+ @return {number} The circumference of the circle.
+*/
 Circle.prototype.getCircumference = function () {
   return this.circumference;
 };
  
 /**
- * Find a String representation of the Circle.
- *
- * @override
- * @this {Circle}
- * @return {string} Human-readable representation of this Circle.
- */
+ Find a String representation of the Circle.
+ 
+ @override
+ @this {Circle}
+ @return {string} Human-readable representation of this Circle.
+*/
 Circle.prototype.toString = function () {
   return "A Circle object with radius of " + this.radius + ".";
 };
@@ -322,6 +322,100 @@ setTimeout(function () {
     console.log('losing');
   });
 }, 1000);
+```
+
+
+Classes
+-------
+Formal classes in JavaScript do not exist.  However, class-like objects may be closely approximated using the following patterns.
+
+```javascript
+var Animal, Cockatoo, gangGang,
+  __hasProp = Object.hasOwnProperty,
+  __extends = function (child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+/*
+  Base animal class provides attributes for names.
+  @class Animal
+*/
+Animal = (function () {
+  /*
+    Genus name of this animal.
+    @property genus
+    @type String
+  */
+  Animal.prototype.genus = 'None';
+  /*
+    Species name of this animal, excluding genus.
+    @property species
+    @type String
+  */
+  Animal.prototype.species = 'none';
+  /*
+    Common name of this animal.
+    @property commonName
+    @type String
+  */
+  Animal.prototype.commonName = null;
+  /*
+    @constructor
+    @param {String} genus genus name of this animal
+    @param {String} species species name of this animal, excluding genus
+    @param {String} commonName common name of this animal
+  */
+  function Animal (genus, species, commonName) {
+    this.genus = genus;
+    this.species = species;
+    this.commonName = commonName;
+  };
+  /*
+    Generates and returns the full species name of this animal.
+    @method getSpeciesName
+    @return {String} species name of this animal
+  */
+  Animal.prototype.getSpeciesName = function () {
+    return "" + genus + " " + Animal.__super__.getSpeciesName.apply(this, arguments);
+  };
+  /*
+    Returns the common name of this animal.
+    @method getCommonName
+    @return {String} common name of this animal
+  */
+  Animal.prototype.getCommonName = function () {
+    return this.commonName;
+  };
+  return Animal;
+})();
+
+/*
+  Represents a Cockatoo animal.
+  @class Cockatoo
+  @extends Animal
+*/
+Cockatoo = (function (_super) {
+  __extends(Cockatoo, _super);
+  /*
+    @constructor
+  */
+  function Cockatoo () {
+    return Cockatoo.__super__.constructor.apply(this, arguments);
+  };
+  /*
+    Generates and returns the common name of this cockatoo.
+    @method getCommonName
+    @return {String} common name of this cockatoo
+  */
+  Cockatoo.prototype.getCommonName = function () {
+    return "" + Cockatoo.__super__.getCommonName.apply(this, arguments) + " Cockatoo";
+  };
+  return Cockatoo;
+})(Animal);
+
+// create an instance of a cockatoo
+gangGang = new Cockatoo('Callocephalon', 'fimbriatum', 'Gang-Gang');
+
+// outputs "Gang-Gang Cockatoo"
+console.log(gangGang.getCommonName());
 ```
 
 
