@@ -112,7 +112,7 @@ When they are needed, comments should be used to explain why a particular piece 
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations.
 
-**All** methods should be commented using [YUI Doc](http://yui.github.io/yuidoc/syntax/) style comments.
+**All** class-like objects and methods should be commented using [YUI Doc](http://yui.github.io/yuidoc/syntax/) style comments.
 
 Quotes
 ---------
@@ -317,7 +317,7 @@ Animal = (function () {
     @return {String} species name of this animal
   */
   Animal.prototype.getSpeciesName = function () {
-    return "" + genus + " " + Animal.__super__.getSpeciesName.apply(this, arguments);
+    return "" + this.genus + " " + this.species;
   };
   /*
     Returns the common name of this animal.
