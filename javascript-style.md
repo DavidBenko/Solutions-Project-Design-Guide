@@ -111,63 +111,7 @@ When they are needed, comments should be used to explain why a particular piece 
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations.
 
-**All** methods should be commented using [JSDoc](https://en.wikipedia.org/wiki/JSDoc) style comments. This comment style is supported in many IDEs. 
-
-```javascript
-/**
- Creates an instance of Circle.
- 
- @constructor
- @this {Circle}
- @param {number} r The desired radius of the circle.
-*/
-function Circle(r) {
-  /** @private */ this.radius = r;
-  /** @private */ this.circumference = 2 * Math.PI * r;
-}
- 
-/**
- Creates a new Circle from a diameter.
- 
- @param {number} d The desired diameter of the circle.
- @return {Circle} The new Circle object.
-*/
-Circle.fromDiameter = function (d) {
-  return new Circle(d / 2);
-};
- 
-/**
- Calculates the circumference of the Circle.
- 
- @deprecated
- @this {Circle}
- @return {number} The circumference of the circle.
-*/
-Circle.prototype.calculateCircumference = function () {
-  return 2 * Math.PI * this.radius;
-};
- 
-/**
- Returns the pre-computed circumference of the Circle.
- 
- @this {Circle}
- @return {number} The circumference of the circle.
-*/
-Circle.prototype.getCircumference = function () {
-  return this.circumference;
-};
- 
-/**
- Find a String representation of the Circle.
- 
- @override
- @this {Circle}
- @return {string} Human-readable representation of this Circle.
-*/
-Circle.prototype.toString = function () {
-  return "A Circle object with radius of " + this.radius + ".";
-};
-```
+**All** methods should be commented using [YUI Doc](http://yui.github.io/yuidoc/syntax/) style comments.
 
 Quotes
 ---------
@@ -187,17 +131,15 @@ Variables
 ---------
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops. 
 
-Prefix private properties with `_`. This is a convention to compensate for JavaScript's lack of private properties on objects. Being able to identify private methods is important because it tells us that we don't need to test those methods and that they will not be coupled to anything outside of the object.
-
-**Preferred:**
-```javascript
-var veryImportantView = Backbone.View.extend({
-  _toViewModel: function () {}
-});
-```
 
 #### Global Variables
-Each project may expose at most one global variable.
+Each project may expose at most one global variable.  This variable may be used as a namespace.
+
+```javascript
+window.AP = {};
+
+AP.MyClass = function () { ... 
+```
 
 Operators
 ---------
@@ -422,3 +364,32 @@ console.log(gangGang.getCommonName());
 Backbone.js
 ---------
 Adhere to all of the best practices outlined [here](https://gist.github.com/liammclennan/2886952#backbone-specific).
+
+
+Object Oriented vs. Procedural Programming
+------------------------------------------
+While it may not seem apparent to beginner JavaScript developers, JavaScript has a rich object-oriented feature set.  These features should be maximized.  Avoid procedural programming conventions.  For example, instead of declaring orphaned variables and functions, use a class.
+
+**Preferred, object-oriented:**
+```javascript
+AP.MyClass = (function () {
+  MyClass.prototype.counter = 0;
+  function MyClass (myRandomData) {
+    this.myRandomData = myRandomData;
+  };
+  MyClass.prototype.increment = function () {
+    return this.counter++;
+  };
+  return MyClass;
+})();
+```
+
+**Not preferred, procedural:**
+```javascript
+  // orphaned variable, not part of any class or object
+var counter = 0,
+  // orphaned function, not part of any class or object
+  increment = function () {
+    return counter++;
+  };
+```
