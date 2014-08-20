@@ -5,26 +5,28 @@ This style guide outlines the coding conventions of the CoffeeScript code at [An
 
 Table of Contents
 ---------
-- [Background](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#background)
-- [Language](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#language)
-- [Code Organization](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#code-organization)
-- [Spacing](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#spacing)
-- [Semicolons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#semicolons)
-- [Linting](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#linting)
-- [Comments](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#comments)
-- [Quotes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#quotes)
-- [Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#variables)
-  - [Global Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#global-variables)
-  - [Private Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#private-variables) 
-- [Functions](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#functions)
-- [Naming](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#naming)
-- [Operators](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#operators)
-  - [Logical Operators](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#logical-operators)
-- [Conditionals](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#conditionals)
-- [Prototypes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#prototypes)
-- [Closures](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#closures)
-- [Singletons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#singletons)
-- [Backbone.js](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/coffeescript-style.md#)
+- [Background](#background)
+- [Language](#language)
+- [Code Organization](#code-organization)
+- [Spacing](#spacing)
+- [Semicolons](#semicolons)
+- [Linting](#linting)
+- [Comments](#comments)
+- [Quotes](#quotes)
+- [Variables](#variables)
+  - [Global Variables](#global-variables)
+  - [Private Variables](#private-variables) 
+- [Functions](#functions)
+- [Naming](#naming)
+- [Operators](#operators)
+  - [Logical Operators](#logical-operators)
+- [Conditionals](#conditionals)
+- [Prototypes](#prototypes)
+- [Closures](#closures)
+- [Singletons](#singletons)
+- [Backbone.js](#)
+- [Object Oriented vs Procedural Programming](#object-oriented-vs-procedural-programming)
+
 
 Background
 ---------
@@ -86,6 +88,9 @@ When they are needed, comments should be used to explain why a particular piece 
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations.
 
+**All** class-like objects and methods should be commented using [YUI Doc](http://yui.github.io/yuidoc/syntax/) style comments.
+
+
 Quotes
 ---------
 **Always** use single quotes, unless you are writing JSON or using string interpolation.
@@ -93,11 +98,13 @@ Quotes
 **Preferred:**
 ```coffeescript
 foo = 'bar'
+bar = "#{foo} is awesome"
 ```
 
 **Not Preferred:**
 ```coffeescript
 foo = "bar"
+bar = foo + ' is awesome'
 ```
 
 Variables
@@ -108,29 +115,22 @@ Variables should be named as descriptively as possible. Single letter variable n
 Each project may expose at most one global variable.
 
 #### Private Variables
-Prefix private variables with `_`. This is a convention to compensate for JavaScript's lack of private properties on objects. Being able to identify private methods is important because it tells us that we don't need to test those methods and that they will not be coupled to anything outside of the object.
-
-**Preferred:**
-```coffeescript
-_privateVariable = 6
-```
-
-The `do` keyword in CoffeeScript lets us execute functions immediately, a great way of encapsulating scope & protecting variables. In the example below, we're defining a variable `_classToType` in the context of an anonymous function which's immediately called by do. That anonymous function returns a second anonymous function, which will be ultimate value of type. Since `_classToType` is defined in a context that no reference is kept to, it can't be accessed outside that scope.
+The `do` keyword in CoffeeScript lets us execute functions immediately, a great way of encapsulating scope & protecting variables. In the example below, we're defining a variable `classToType` in the context of an anonymous function which's immediately called by do. That anonymous function returns a second anonymous function, which will be ultimate value of type. Since `classToType` is defined in a context that no reference is kept to, it can't be accessed outside that scope.
 
 ```coffeescript
 # Execute function immediately
 type = do ->
-  _classToType = {}
+  classToType = {}
   for name in 'Boolean Number String Function Array Date RegExp Undefined Null'.split(' ')
-    _classToType['[object ' + name + ']'] = name.toLowerCase()
+    classToType['[object ' + name + ']'] = name.toLowerCase()
 
   # Return a function
   (obj) ->
     strType = Object::toString.call(obj)
-    _classToType[strType] or 'object'
+    classToType[strType] or 'object'
 ```
 
-In other words, `_classToType` is completely private, and can never again be referenced outside the executing anonymous function. This pattern is a great way of encapsulating scope and hiding variables.
+In other words, `classToType` is completely private, and can never again be referenced outside the executing anonymous function. This pattern is a great way of encapsulate scope and hide variables.
 
 Functions
 ---------
@@ -213,7 +213,7 @@ myFavoriteVariable = myFavoriteVariable || {}
 
 Conditionals
 ---------
-Conditionals should use the positive case if possible when using an `else` body. If there is no `else` body, it is fine to use the negative case. Prefer `unless` over `if not`.
+Conditionals should use the positive case if possible when using an `else` body. If there is no `else` body, it is fine to use the negative case.
 
 **Preferred:**
 ```coffeescript
@@ -225,21 +225,10 @@ else
 
 
 # If with no else body
-unless someOtherVariable
+if !someOtherVariable
 	# Do Something
 ```
 
-**Not Preferred:**
-```coffeescript
-if not someVariable
-  # Do Something
-
-
-unless(someVariable)
-	# Do Something
-else
-	# Do Something
-```
 
 Prototypes
 ---------
@@ -286,7 +275,7 @@ setTimeout (->
 
 Singletons
 ---------
-Singletons should use this pattern ([adapted from Google](http://code.google.com/p/jslibs/wiki/JavascriptTips#Singleton_pattern) to work in "strict" mode)
+Singletons are classes which are either not instantiated or instantiated only once.
 
 ```coffeescript
 class Singleton
@@ -316,6 +305,110 @@ a.instance # => undefined
 Singleton.PrivateClass # => undefined
 ```
 
+Classes
+-------
+CoffeeScript provides a familiar syntax for declaring classes and class inheritance.  Once compiled to JavaScript, classes become constructor functions with efficient prototype chains to express default members and inheritance.
+
+```coffeescript
+###*
+Base animal class provides attributes for names.
+@class Animal
+###
+class Animal
+  ###*
+  Genus name of this animal.
+  @property genus
+  @type String
+  ###
+  genus: 'None'
+  
+  ###*
+  Species name of this animal, excluding genus.
+  @property species
+  @type String
+  ###
+  species: 'none'
+  
+  ###*
+  Common name of this animal.
+  @property commonName
+  @type String
+  ###
+  commonName: null
+  
+  ###*
+  @constructor
+  @param {String} genus genus name of this animal
+  @param {String} species species name of this animal, excluding genus
+  @param {String} commonName common name of this animal
+  ###
+  constructor: (@genus, @species, @commonName) ->
+    # pass
+  
+  ###*
+  Generates and returns the full species name of this animal.
+  @method getSpeciesName
+  @return {String} species name of this animal
+  ###
+  getSpeciesName: ->
+    "#{@genus} #{@species}"
+  
+  ###*
+  Returns the common name of this animal.
+  @method getCommonName
+  @return {String} common name of this animal
+  ###
+  getCommonName: ->
+    @commonName
+
+
+###*
+Represents a Cockatoo animal.
+@class Cockatoo
+@extends Animal
+###
+class Cockatoo extends Animal
+  ###*
+  Generates and returns the common name of this cockatoo.
+  @method getCommonName
+  @return {String} common name of this cockatoo
+  ###
+  getCommonName: ->
+    "#{super} Cockatoo"
+
+
+# create an instance of a cockatoo
+gangGang = new Cockatoo 'Callocephalon', 'fimbriatum', 'Gang-Gang'
+
+
+# outputs "Gang-Gang Cockatoo"
+console.log gangGang.getCommonName()
+```
+
+
 Backbone.js
 ---------
 Adhere to all of the best practices outlined [here](https://gist.github.com/liammclennan/2886952#backbone-specific).
+
+
+Object Oriented vs Procedural Programming
+-----------------------------------------
+While it may not seem apparent to beginner JavaScript developers, JavaScript has a rich object-oriented feature set.  These features should be maximized.  Avoid procedural programming conventions.  For example, instead of declaring orphaned variables and functions, use a class.
+
+**Preferred, object-oriented:**
+```coffeescript
+class AP.MyClass
+  counter: 0
+  constructor: (@myRandomData) ->
+    # pass
+  increment: ->
+    @counter++
+```
+
+**Not preferred, procedural:**
+```javascript
+# orphaned variable, not part of any class or object
+counter = 0
+# orphaned function, not part of any class or object
+increment = -> counter++
+```
