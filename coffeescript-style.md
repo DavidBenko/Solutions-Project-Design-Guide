@@ -15,7 +15,6 @@ Table of Contents
 - [Quotes](#quotes)
 - [Variables](#variables)
   - [Global Variables](#global-variables)
-  - [Private Variables](#private-variables) 
 - [Functions](#functions)
 - [Naming](#naming)
 - [Operators](#operators)
@@ -112,25 +111,7 @@ Variables
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops. 
 
 #### Global Variables
-Each project may expose at most one global variable.
-
-#### Private Variables
-The `do` keyword in CoffeeScript lets us execute functions immediately, a great way of encapsulating scope & protecting variables. In the example below, we're defining a variable `classToType` in the context of an anonymous function which's immediately called by do. That anonymous function returns a second anonymous function, which will be ultimate value of type. Since `classToType` is defined in a context that no reference is kept to, it can't be accessed outside that scope.
-
-```coffeescript
-# Execute function immediately
-type = do ->
-  classToType = {}
-  for name in 'Boolean Number String Function Array Date RegExp Undefined Null'.split(' ')
-    classToType['[object ' + name + ']'] = name.toLowerCase()
-
-  # Return a function
-  (obj) ->
-    strType = Object::toString.call(obj)
-    classToType[strType] or 'object'
-```
-
-In other words, `classToType` is completely private, and can never again be referenced outside the executing anonymous function. This pattern is a great way of encapsulate scope and hide variables.
+Each project may expose at most one global variable.  See JavaScript style guide for example.
 
 Functions
 ---------
@@ -389,7 +370,7 @@ class AP.MyClass
 ```
 
 **Not preferred, procedural:**
-```javascript
+```coffeescript
 # orphaned variable, not part of any class or object
 counter = 0
 # orphaned function, not part of any class or object
