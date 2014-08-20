@@ -275,34 +275,17 @@ setTimeout (->
 
 Singletons
 ---------
-Singletons are classes which are either not instantiated or instantiated only once.
+Singletons are classes which are either not instantiated or instantiated only once.  Singletons which are not instantiated may use static members.
 
 ```coffeescript
-class Singleton
-  # You can add statements inside the class definition
-  # which helps establish private scope (due to closures)
-  # instance is defined as null to force correct scope
-  instance = null
-  # Create a private class that we can initialize however
-  # defined inside this scope to force the use of the
-  # singleton class.
-  class PrivateClass
-    constructor: (@message) ->
-    echo: -> @message
-  # This is a static method used to either retrieve the
-  # instance or create a new one.
-  @get: (message) ->
-    instance ?= new PrivateClass(message)
+# Singleton which uses static members
+class MySingleton
+  @counter: 0
+  @increment: ->
+    @counter++
 
-a = Singleton.get 'Hello A'
-a.echo() # => "Hello A"
-
-b = Singleton.get 'Hello B'
-b.echo() # => "Hello A"
-
-Singleton.instance # => undefined
-a.instance # => undefined
-Singleton.PrivateClass # => undefined
+MySingleton.increment()
+console.log MySingleton.counter
 ```
 
 Classes
