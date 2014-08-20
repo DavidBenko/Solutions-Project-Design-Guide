@@ -23,6 +23,7 @@ Table of Contents
 - [Closures](#closures)
 - [Classes](#classes)
 - Backbone.js
+- [Object Oriented vs Procedural Programming](#object-oriented-vs-procedural-programming)
 
 Background
 ---------
@@ -366,8 +367,8 @@ Backbone.js
 Adhere to all of the best practices outlined [here](https://gist.github.com/liammclennan/2886952#backbone-specific).
 
 
-Object Oriented vs. Procedural Programming
-------------------------------------------
+Object Oriented vs Procedural Programming
+-----------------------------------------
 While it may not seem apparent to beginner JavaScript developers, JavaScript has a rich object-oriented feature set.  These features should be maximized.  Avoid procedural programming conventions.  For example, instead of declaring orphaned variables and functions, use a class.
 
 **Preferred, object-oriented:**
