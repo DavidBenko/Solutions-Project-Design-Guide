@@ -5,24 +5,25 @@ This style guide outlines the coding conventions of the JavaScript code at [AnyP
 
 Table of Contents
 ---------
-- [Background](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#background)
-- [Language](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#language)
-- [Code Organization](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#code-organization)
-- [Spacing](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#spacing)
-- [Semicolons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#semicolons)
-- [Linting](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#linting)
-- [Comments](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#comments)
-- [Quotes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#quotes)
-- [Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#variables)
-  - [Global Variables](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#global-variables)
-- [Operators](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#operators)
-  - [Equality](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#equality)
-- [Conditionals](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#conditionals)
-- [Ternary Operator](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#ternary-operator)
-- [Prototypes](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#prototypes)
-- [Closures](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#closures)
-- [Singletons](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#singletons)
-- [Backbone.js](https://github.com/AnyPresence-Services/Solutions-Project-Design-Guide/blob/master/javascript-style.md#)
+- [Background](#background)
+- [Language](#language)
+- [Code Organization](#code-organization)
+- [Spacing](#spacing)
+- [Semicolons](#semicolons)
+- [Linting](#linting)
+- [Comments](#comments)
+- [Quotes](#quotes)
+- [Variables](#variables)
+  - [Global Variables](#global-variables)
+- [Operators](#operators)
+  - [Equality](#equality)
+- [Conditionals](#conditionals)
+- [Ternary Operator](#ternary-operator)
+- [Prototypes](#prototypes)
+- [Closures](#closures)
+- [Classes](#classes)
+- Backbone.js
+- [Object Oriented vs Procedural Programming](#object-oriented-vs-procedural-programming)
 
 Background
 ---------
@@ -65,18 +66,21 @@ This minimizes coupling and maximizes cohesion because dependencies tend to go t
 
 Spacing
 ---------
-- Indent using tabs. Never indent with spaces.
+- Indent using 2 spaces. Never indent with tabs.
 - No whitespace at the end of line or on blank lines.
 - Use UNIX-style newlines (`\n`), and a newline character as the last character of a file. Windows-style newlines (`\r\n`) are forbidden inside any repository.
 - New line at the end of each file.
 - Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
+- No spaces *inside* parentheses.  i.e. `if (foo) {` but not `if ( foo ) {`.
+- One space *outside* parentheses.  i.e. `function (bar) {` but not `function(bar){`.
+- Function calls should have *no space* before the opening paren.  i.e. `myFunc('value');`
 
 **Preferred:**
 ```javascript
 if (user.isHappy) {
-  //Do something
+  // Do something
 } else {
-  //Do something else
+  // Do something else
 }
 ```
 
@@ -84,11 +88,11 @@ if (user.isHappy) {
 ```javascript
 if (user.isHappy)
 {
-    //Do something
+  // Do something
 }
 else 
 {
-    //Do something else
+  // Do something else
 }
 ```
 
@@ -108,63 +112,7 @@ When they are needed, comments should be used to explain why a particular piece 
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations.
 
-**All** methods should be commented using [JSDoc](https://en.wikipedia.org/wiki/JSDoc) style comments. This comment style is supported in many IDEs. 
-
-```javascript
-/**
- * Creates an instance of Circle.
- *
- * @constructor
- * @this {Circle}
- * @param {number} r The desired radius of the circle.
- */
-function Circle(r) {
-    /** @private */ this.radius = r;
-    /** @private */ this.circumference = 2 * Math.PI * r;
-}
- 
-/**
- * Creates a new Circle from a diameter.
- *
- * @param {number} d The desired diameter of the circle.
- * @return {Circle} The new Circle object.
- */
-Circle.fromDiameter = function (d) {
-    return new Circle(d / 2);
-};
- 
-/**
- * Calculates the circumference of the Circle.
- *
- * @deprecated
- * @this {Circle}
- * @return {number} The circumference of the circle.
- */
-Circle.prototype.calculateCircumference = function () {
-    return 2 * Math.PI * this.radius;
-};
- 
-/**
- * Returns the pre-computed circumference of the Circle.
- *
- * @this {Circle}
- * @return {number} The circumference of the circle.
- */
-Circle.prototype.getCircumference = function () {
-    return this.circumference;
-};
- 
-/**
- * Find a String representation of the Circle.
- *
- * @override
- * @this {Circle}
- * @return {string} Human-readable representation of this Circle.
- */
-Circle.prototype.toString = function () {
-    return "A Circle object with radius of " + this.radius + ".";
-};
-```
+**All** methods should be commented using [YUI Doc](http://yui.github.io/yuidoc/syntax/) style comments.
 
 Quotes
 ---------
@@ -184,18 +132,15 @@ Variables
 ---------
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops. 
 
-Prefix private properties with `_`. This is a convention to compensate for JavaScript's lack of private properties on objects. Being able to identify private methods is important because it tells us that we don't need to test those methods and that they will not be coupled to anything outside of the object.
-
-**Preferred:**
-```javascript
-var veryImportantView = Backbone.View.extend({
-  _toViewModel: function () {
-  }
-});
-```
 
 #### Global Variables
-Each project may expose at most one global variable.
+Each project may expose at most one global variable.  This variable may be used as a namespace.
+
+```javascript
+window.AP = {};
+
+AP.MyClass = function () { ... 
+```
 
 Operators
 ---------
@@ -236,25 +181,23 @@ Conditionals should use the positive case if possible when using an `else` body.
 **Preferred:**
 ```javascript
 // If with else body
-if(someVariable){
+if (someVariable) {
 	// Do Something
-}
-else {
+} else {
 	// Do Something
 }
 
 // If with no else body
-if(!someOtherVariable){
+if (!someOtherVariable) {
 	// Do Something
 }
 ```
 
 **Not Preferred:**
 ```javascript
-if(!someVariable){
+if (!someVariable) {
 	// Do Something
-}
-else {
+} else {
 	// Do Something
 }
 ```
@@ -289,7 +232,7 @@ if (!a.length) {
 
 **Not Preferred:**
 ```javascript
-Array.prototype.empty = function() {
+Array.prototype.empty = function () {
   return !this.length;
 }
 
@@ -305,52 +248,149 @@ Closures should be named to produce better stack traces, heap and cpu profiles. 
 
 **Preferred:**
 ```javascript
-setTimeout(function connect() {
-  client.connect(afterConnect);
-}, 1000);
-
-function afterConnect() {
+var afterConnect = function () {
   console.log('connected');
-}
+},
+connect = function () {
+  client.connect(afterConnect);
+};
+
+setTimeout(connect, 1000);
 
 ```
 **Not Preferred:**
 ```javascript
-setTimeout(function() {
-  client.connect(function() {
+setTimeout(function () {
+  client.connect(function () {
     console.log('losing');
   });
 }, 1000);
 ```
 
-Singletons
----------
-Singletons should use this pattern ([adapted from Google](http://code.google.com/p/jslibs/wiki/JavascriptTips#Singleton_pattern) to work in "strict" mode)
+
+Classes
+-------
+Formal classes in JavaScript do not exist.  However, class-like objects may be closely approximated using the following patterns.
 
 ```javascript
-(function(global) {
-  "use strict";
-  var MySingletonClass = function() {
+var Animal, Cockatoo, gangGang,
+  __hasProp = Object.hasOwnProperty,
+  __extends = function (child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-    if ( MySingletonClass.prototype._singletonInstance ) {
-      return MySingletonClass.prototype._singletonInstance;
-    }
-    MySingletonClass.prototype._singletonInstance = this;
-
-    this.Foo = function() {
-      // ...
-    };
+/*
+  Base animal class provides attributes for names.
+  @class Animal
+*/
+Animal = (function () {
+  /*
+    Genus name of this animal.
+    @property genus
+    @type String
+  */
+  Animal.prototype.genus = 'None';
+  /*
+    Species name of this animal, excluding genus.
+    @property species
+    @type String
+  */
+  Animal.prototype.species = 'none';
+  /*
+    Common name of this animal.
+    @property commonName
+    @type String
+  */
+  Animal.prototype.commonName = null;
+  /*
+    @constructor
+    @param {String} genus genus name of this animal
+    @param {String} species species name of this animal, excluding genus
+    @param {String} commonName common name of this animal
+  */
+  function Animal (genus, species, commonName) {
+    this.genus = genus;
+    this.species = species;
+    this.commonName = commonName;
   };
+  /*
+    Generates and returns the full species name of this animal.
+    @method getSpeciesName
+    @return {String} species name of this animal
+  */
+  Animal.prototype.getSpeciesName = function () {
+    return "" + genus + " " + Animal.__super__.getSpeciesName.apply(this, arguments);
+  };
+  /*
+    Returns the common name of this animal.
+    @method getCommonName
+    @return {String} common name of this animal
+  */
+  Animal.prototype.getCommonName = function () {
+    return this.commonName;
+  };
+  return Animal;
+})();
 
-var a = new MySingletonClass();
-var b = MySingletonClass();
-global.result = a === b;
+/*
+  Represents a Cockatoo animal.
+  @class Cockatoo
+  @extends Animal
+*/
+Cockatoo = (function (_super) {
+  __extends(Cockatoo, _super);
+  /*
+    @constructor
+  */
+  function Cockatoo () {
+    return Cockatoo.__super__.constructor.apply(this, arguments);
+  };
+  /*
+    Generates and returns the common name of this cockatoo.
+    @method getCommonName
+    @return {String} common name of this cockatoo
+  */
+  Cockatoo.prototype.getCommonName = function () {
+    return "" + Cockatoo.__super__.getCommonName.apply(this, arguments) + " Cockatoo";
+  };
+  return Cockatoo;
+})(Animal);
 
-}(window));
+// create an instance of a cockatoo
+gangGang = new Cockatoo('Callocephalon', 'fimbriatum', 'Gang-Gang');
 
-console.log(result);
+// outputs "Gang-Gang Cockatoo"
+console.log(gangGang.getCommonName());
 ```
+
 
 Backbone.js
 ---------
 Adhere to all of the best practices outlined [here](https://gist.github.com/liammclennan/2886952#backbone-specific).
+
+
+Object Oriented vs Procedural Programming
+-----------------------------------------
+While it may not seem apparent to beginner JavaScript developers, JavaScript has a rich object-oriented feature set.  These features should be maximized.  Avoid procedural programming conventions.  For example, instead of declaring orphaned variables and functions, use a class.
+
+**Preferred, object-oriented:**
+```javascript
+AP.MyClass = (function () {
+  MyClass.prototype.counter = 0;
+  function MyClass (myRandomData) {
+    this.myRandomData = myRandomData;
+  };
+  MyClass.prototype.increment = function () {
+    return this.counter++;
+  };
+  return MyClass;
+})();
+```
+
+**Not preferred, procedural:**
+```javascript
+  // orphaned variable, not part of any class or object
+var counter = 0,
+  // orphaned function, not part of any class or object
+  increment = function () {
+    return counter++;
+  };
+```
